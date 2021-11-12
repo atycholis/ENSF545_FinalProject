@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,7 +13,7 @@ public class UserObjectBehaviour : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        rb.mass = 0.0000001f;
+        rb.mass = 0.1f;
 
         userObject.transform.localScale = new Vector3(scaleVal, scaleVal, scaleVal);
 
@@ -23,9 +23,23 @@ public class UserObjectBehaviour : MonoBehaviour
     void Update()
     {
         scaleVal = transform.localScale.x;
-        userObject.transform.localScale = new Vector3(scaleVal, scaleVal, scaleVal);
 
-        rb.mass = scaleVal;
+        // If the user presses the left mouse button when hovering over the object, double its size and weight 
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                scaleVal = scaleVal + 0.1f;
+                userObject.transform.localScale = new Vector3(scaleVal, scaleVal, scaleVal);
+                rb.mass = scaleVal;
+            }
+            else if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                scaleVal = scaleVal - 0.1f;
+                userObject.transform.localScale = new Vector3(scaleVal, scaleVal, scaleVal);
+                rb.mass = scaleVal;
+            }
+        }
 
     }
 }
